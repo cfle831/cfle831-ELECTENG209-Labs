@@ -71,6 +71,13 @@ Calculated for the capacitor circuit, ignoring resistor:
 * Average Power: 0W (Always 0 in purely reactive circuit)
 * Peak Instantaneous Power: 97.4
 
+Simulated, with resistor
+
+* RMS Voltage: 21.706
+* RMS Current: 1.11A
+* Average Power: 2.71mW
+* Peak Instantanteous Power; 38W
+
 
 
 
@@ -95,9 +102,92 @@ Simulated:
 
 ###### 1.6
 
-Accuracy can be improved by decreasing the size of the timestep. this can/would cause simulations to take longer to compute, due to more points being calculated
+Accuracy can be improved by decreasing the size of the timestep. this can/would cause simulations to take longer to compute, due to more points being calculated.
+
+I observe smoother lines, and longer simulation time, but no significant changes to the data 
+
 
 ###### 1.7
 
-I observe smoother lines
+Capacitor circuit:
+
+* RMS voltage increases to 24V
+* RMS current stays the same
+* Peak instantaneous power increases to 40W
+* Average power decreases to 20.3nW
+
+Inductor Circuit:
+
+* RMS current increases to 1.5A
+* RMS voltage stays the same
+* Peak instantaneous power increases to 40.5W 
+* Average power decreases to -3.6mW
+
+So the average power moves significantly towards the expected value of 0W. and instantaneous power peak increases.
+
+
+
+
+
+2.1
+
+Maximum RMS load voltage: 15.4 
+
+Minimum RMS load voltage: 12.6
+
+
+
+Maximum RMS load current: 0.595
+
+Minimum RMS load current: 0.160
+
+
+
+2.2
+
+Theoretical Values
+
+* Load current (IL(rms)): 0.5004A
+* Real Power (W): 12.517W
+* Reactive Power (VAR): 6.291 VAR
+* Apparent Power (VA): 14.009 VA
+
+Simulated Values
+
+* Load current (IL(rms)): 0.550A
+* Real Power (W): 6.25W
+* Reactive Power (VAR): 3.16 VAR
+* Apparent Power (VA): 7 VA
+
+The results show a similar current value, but the power is exactly half what I calculated.
+
+This is due an error i made, where i calculated the power values using non-RMS values for Current and voltage, when i was supposed to be using RMS
+
+
+
+2.3
+
+Theoretical Values
+
+
+
+* Load current (IL(rms)): 0.1841
+* Real Power (W): 2.542
+* Reactive Power (VAR): 
+* Apparent Power (VA): 12.84
+
+Simulated Values
+
+* Load current (IL(rms)): 0
+* Real Power (W): 
+* Reactive Power (VAR): 
+* Apparent Power (VA): 
+
+
+
+
+
+
+
+
 
