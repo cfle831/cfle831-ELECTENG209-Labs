@@ -104,7 +104,8 @@ Simulated:
 
 Accuracy can be improved by decreasing the size of the timestep. this can/would cause simulations to take longer to compute, due to more points being calculated.
 
-I observe smoother lines, and longer simulation time, but no significant changes to the data 
+I observe smoother lines, and longer simulation time, but no significant changes to the data
+
 
 
 ###### 1.7
@@ -120,7 +121,7 @@ Inductor Circuit:
 
 * RMS current increases to 1.5A
 * RMS voltage stays the same
-* Peak instantaneous power increases to 40.5W 
+* Peak instantaneous power increases to 40.5W
 * Average power decreases to -3.6mW
 
 So the average power moves significantly towards the expected value of 0W. and instantaneous power peak increases.
@@ -131,7 +132,7 @@ So the average power moves significantly towards the expected value of 0W. and i
 
 2.1
 
-Maximum RMS load voltage: 15.4 
+Maximum RMS load voltage: 15.4
 
 Minimum RMS load voltage: 12.6
 
@@ -173,15 +174,145 @@ Theoretical Values
 
 * Load current (IL(rms)): 0.1841
 * Real Power (W): 2.542
-* Reactive Power (VAR): 
-* Apparent Power (VA): 12.84
+* Reactive Power (VAR): 0.4259
+* Apparent Power (VA): 2.577
 
 Simulated Values
 
-* Load current (IL(rms)): 0
-* Real Power (W): 
-* Reactive Power (VAR): 
-* Apparent Power (VA): 
+* Load current (IL(rms)): 0.18409A
+* Real Power (W): 2.5418
+* Reactive Power (VAR): 0.426
+* Apparent Power (VA): 2.57726
+
+Results match, because the simulation is using a real inductor
+
+
+
+3.1
+
+I determined that a 0.1 Ohm resistor would be suitable for this, as it's average power dissipation is 128mW (Simulated).
+
+
+
+3.2
+
+shunt resistor of 0.1 Ohm
+
+For Source VA of 7.5, Vrms of 12.6
+
+* RL: 16.943 Ohm:
+* IL: 0.59523 A:
+* Vis Theoretical: 0.084 V
+* Vis Simulated: 0.086 V
+* Pis Theoretical: 70mW
+* Pis Simulated: 76.63mW
+
+For Source VA of 7.5, Vrms of 15.4
+
+* RL: 28.91 Ohm
+* IL: 0.487 A
+* Vis Theoretical: 0.0689 V
+* Vis Simulated: 0.069 V
+* Pis Theoretical: 47.44mW
+* Pis Simulated: 48mW
+
+For Source VA of 2.5, Vrms of 15.4
+
+* RL: 93.928 Ohm
+* IL: 0.162 A
+* Vis Theoretical: 0.023 V
+* Vis Simulated: 0.0228 V
+* Pis Theoretical: 5.27mW
+* Pis Simulated: 5.26mW
+
+Pis remains under 200mW for all of the above situations, which includes the limits that would cause the most and least power across the shunt resistor
+
+
+
+3.3
+
+
+
+Bigger R Value:
+
+* SNR: Higher
+* Dissipation (Pis): Larger
+* Size: Unsure
+* Cost: Unsure
+
+Lower R Values:
+
+* SNR: Lower
+* Dissipation (Pis): Lower
+* Size: Unsure
+* Cost: Unsure
+
+
+
+4.1
+
+Ra/Rb ratio: 10, as to step down from 21.7 (15.4Rms) to \~2 V, Rb needs <10% of the voltage. e.g 12
+
+Ra: 10kOhm
+
+Rb: 1kOhm
+
+these values chosen as they are standard resistor sizes
+
+
+
+4.2
+
+
+
+For Source VA of 7.5, Vrms of 12.6
+
+* RL: 16.943 Ohm:
+* IL: 0.59523 A:
+* Vvs Theoretical: 1.62
+* Vvs simulated: 1.62
+* Pvs theoretical Peak: 28.865mW
+* Pvs Simulated: 28.84
+
+
+
+
+
+For Source VA of 7.5, Vrms of 15.4
+
+* RL: 28.91 Ohm
+* IL: 0.487 A
+* Vvs Theoretical: 1.98V
+* Vvs simulated: 19.8V
+* Pvs theoretical Peak: 43.12mW
+* Pvs Simulated: 43.1mW
+
+
+
+
+
+
+
+For Source VA of 2.5, Vrms of 15.4
+
+* RL: 93.928 Ohm
+* IL: 0.162 A
+* Vvs Theoretical: 1.98V
+* Vvs simulated: 1.97 V
+* Pvs theoretical: 43.12mW
+* Pvs Simulated: 43.1mW
+
+
+
+The 2V p-p requirement is met, barely, but 4.1 specifically states 'about 2V' so this is satisfactory.
+
+The power dissipation (Peak) is under 100mW in these cases, which is acceptable
+
+
+
+
+
+
 
 
 
