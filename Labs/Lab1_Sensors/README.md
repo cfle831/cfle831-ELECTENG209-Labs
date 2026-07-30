@@ -237,15 +237,15 @@ Bigger R Value:
 
 * SNR: Higher
 * Dissipation (Pis): Larger
-* Size: Unsure
-* Cost: Unsure
+* Size: Likely the same
+* Cost: Likely Lower
 
 Lower R Values:
 
 * SNR: Lower
 * Dissipation (Pis): Lower
-* Size: Unsure
-* Cost: Unsure
+* Size: Likely the same
+* Cost: likely higher
 
 
 
@@ -304,21 +304,47 @@ For Source VA of 2.5, Vrms of 15.4
 
 
 
+&#x09;
+
+
+
 The 2V p-p requirement is met, barely, but 4.1 specifically states 'about 2V' so this is satisfactory.
 
 The power dissipation (Peak) is under 100mW in these cases, which is acceptable
 
 
 
+4.3
 
 
 
+Ohms
+
+SNR: Less
+
+Dissipation (Pvs): Low
+
+Sensitivity: High
 
 
 
+Kilo-Ohms
+
+SNR: Medium
+
+Dissipation (Pvs): Medium
+
+Sensitivity: Medium
 
 
 
+Mega-Ohms
+
+SNR: High
+
+Dissipation (Pvs): High
+
+Sensitivity: Low
 
 
 
