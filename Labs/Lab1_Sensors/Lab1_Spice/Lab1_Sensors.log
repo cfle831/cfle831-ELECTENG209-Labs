@@ -1,6 +1,6 @@
 LTspice 26.0.2 for Windows
 Circuit: C:\Users\ferre\OneDrive\Documents\Uni\Year II\Sem 2\ELECTENG 209\cfle831-ELECTENG299-Labs\Labs\Lab1_Sensors\Lab1_Spice\Lab1_Sensors.net
-Start Time: Thu Jul 30 16:27:04 2026
+Start Time: Thu Jul 30 17:23:14 2026
 solver = Normal
 Maximum thread count: 8
 tnom = 27
@@ -9,7 +9,7 @@ method = trap
 WARNING: Node n009 is floating.
 
 Direct Newton iteration succeeded in finding operating point.
-Total elapsed time: 0.459 seconds.
+Total elapsed time: 0.707 seconds.
 
 Files loaded:
 C:\Users\ferre\OneDrive\Documents\Uni\Year II\Sem 2\ELECTENG 209\cfle831-ELECTENG299-Labs\Labs\Lab1_Sensors\Lab1_Spice\Lab1_Sensors.net
