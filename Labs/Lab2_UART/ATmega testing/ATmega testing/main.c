@@ -52,11 +52,17 @@ void transmit_decimal(uint16_t dec_val){
 		usart_transmit(digits[0] + 48);
 		usart_transmit(digits[1] + 48);
 		usart_transmit(digits[2] + 48);
+		usart_transmit(',');
+		usart_transmit(' ');
 	} else if (!(digits[1] <=0)){
 			usart_transmit(digits[1] + 48);
 			usart_transmit(digits[2] + 48);
+			usart_transmit(',');
+			usart_transmit(' ');
 	} else{
 		usart_transmit(digits[2] + 48);
+		usart_transmit(',');
+		usart_transmit(' ');
 	}
 	
 }
@@ -96,7 +102,7 @@ int main(void)
 		} else{
 			transmit_decimal(primes[curIndex]);
 			curIndex++;
-			
+			if(curIndex>62) curIndex = 0;
 			_delay_ms(500);
 		}
 	}
