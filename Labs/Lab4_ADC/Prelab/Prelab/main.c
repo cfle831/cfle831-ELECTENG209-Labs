@@ -4,9 +4,9 @@
  * Created: 27/08/2026 1:20:16 pm
  * Author : ferre
  */ 
-#define F_CPU 16000000
+#define F_CPU 2000000
 #define LED_FREQUENCY 1
-#define BUTTON_HELD (PINB & (1<<PINB7))
+#define BUTTON_OPEN (PINB & (1<<PINB7))
 
 
 #include <avr/io.h>
@@ -28,11 +28,12 @@ int main(void)
 	volatile bool button_held = false;
     while (1) 
     {
-		if (BUTTON_HELD){
+		if (BUTTON_OPEN){
 			PORTB |= (1<<PINB5);
 			_delay_ms(50);
 		} else{
-			PORTB = 0x00;
+			PORTB &= ~(1<<PINB5);
+			_delay_ms(50);
 		}
 		
 		
