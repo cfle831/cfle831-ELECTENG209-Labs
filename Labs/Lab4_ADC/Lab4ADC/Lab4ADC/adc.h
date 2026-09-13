@@ -5,7 +5,6 @@
 
 #include <stdint.h>
 #include <avr/io.h>
-
 #define  V_REF 5
 
 void adc_init(void);

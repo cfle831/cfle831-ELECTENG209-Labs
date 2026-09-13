@@ -5,20 +5,28 @@
  * Author : Loelene
  */ 
 
+#include "global.h"
+#include "adc.h"
+#include "UART.h"
+
 #include <avr/io.h>
 #include <util/delay.h>
-#include "adc.h"
+
+
 
 
 int main(void)
 {
-	volatile uint16_t value = 0;
+	volatile uint16_t volt_value = 0;
 	adc_init();
+	usart_init(((F_CPU/((uint32_t)16*BAUD)) - 1));
     /* Replace with your application code */
     while (1) 
     {
 		_delay_ms(1);
-		value = adc_convert_mv(adc_read(2));
+		volt_value = adc_convert_mv(adc_read(2));
+		transmit_string_with_val("Read voltage is ", decimal_to_char(12345), 16);
+		// fix decimal to char
 		
     }
 }
