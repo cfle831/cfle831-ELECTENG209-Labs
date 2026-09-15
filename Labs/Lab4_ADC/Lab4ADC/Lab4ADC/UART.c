@@ -27,27 +27,25 @@ void usart_init(uint16_t ubrr){
 char string_5_dig[6] = {};
 char* decimal_to_char(uint16_t value){
 	uint32_t divisor = 10000;
+	// Clear string_5_dig
 	memset(string_5_dig, 0, 6);
 	string_5_dig[5] = '\0';
-	
+	// Convert digits to characters
 	for (uint8_t index = 0; index<5; index++){
 		string_5_dig[index] = (char)(((value / divisor) % 10)+48);
-		
 		divisor /= 10;
-		
 	}
 	
 	// Trim Leading zeros
-	
+	// Does not trim if there are no non-zero values
 	uint8_t first_dig_index = 0;
 	for (uint8_t index = 0; index<5; index++){
 		if (string_5_dig[index] != '0'){
-			
 			first_dig_index = index;
-			
 			break;
 		}
 	}
+	// Rearrange to trim
 	if (first_dig_index){
 		for (uint8_t index = 0; index<6; index++){
 			if ((index + first_dig_index) >=5){
@@ -55,9 +53,7 @@ char* decimal_to_char(uint16_t value){
 				
 				break;
 			} else{
-				
 				string_5_dig[index] = string_5_dig[index + first_dig_index];	
-					
 			}
 		
 		}
@@ -74,29 +70,6 @@ void usart_transmit(uint8_t data){
 	 
  }
  
-void transmit_decimal(uint16_t dec_val){
-	 uint8_t digits[3] = {};
-	 digits[0] = ((dec_val / 100) % 10);
-	 digits[1] = ((dec_val / 10) % 10);
-	 digits[2] = ((dec_val) % 10);
-	 if (!(digits[0] <= 0)) {
-		 usart_transmit(digits[0] + 48);
-		 usart_transmit(digits[1] + 48);
-		 usart_transmit(digits[2] + 48);
-		 usart_transmit(',');
-		 usart_transmit(' ');
-		 } else if (!(digits[1] <= 0)){
-		 usart_transmit(digits[1] + 48);
-		 usart_transmit(digits[2] + 48);
-		 usart_transmit(',');
-		 usart_transmit(' ');
-		 } else{
-		 usart_transmit(digits[2] + 48);
-		 usart_transmit(',');
-		 usart_transmit(' ');
-	 }
-	 
- }
  
 void transmit_string_with_val(char text[], char value[], uint8_t length){
 	 for (uint8_t i = 0; i<length; i++){
@@ -113,8 +86,34 @@ void transmit_string_with_val(char text[], char value[], uint8_t length){
 	 }
  }
  
+ void transmit_string(char text[]){
+	 for (uint8_t i = 0; i<32; i++){
+		 if (text[i] == '\0'){
+			 break;
+		 }
+		 usart_transmit(text[i]);
+		 _delay_ms(5);
+	 }
+ }
+ 
+ void transmit_text(char text[], uint8_t length){
+	 for (uint8_t i = 0; i<length; i++){
+		 usart_transmit(text[i]);
+		 _delay_ms(5);
+	 }
+ }
  
  void transmit_new_line(){
 	 usart_transmit('\n');
 	 usart_transmit('\r');
+ }
+ 
+ 
+ void transmit_excel_two_columns(uint16_t col_1[], uint16_t col_2[]){
+	for (uint8_t index = 0; index<40; index++){
+		transmit_string(decimal_to_char(col_1[index]));
+		usart_transmit(','); usart_transmit(' '); usart_transmit(9);
+		transmit_string(decimal_to_char(col_2[index]));
+		transmit_new_line();
+	}
  }

@@ -7,6 +7,7 @@
 void adc_init(void){
 	// Enable ADC converter
 	ADCSRA = (1<<ADEN);
+	ADMUX = (1 << REFS0);
 	// Clock prescaler of 16
 	ADCSRA |= (1 << ADPS2);
 	ADCSRB = 0x00;
