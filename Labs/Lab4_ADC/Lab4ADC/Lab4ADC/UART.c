@@ -26,12 +26,15 @@ void usart_init(uint16_t ubrr){
 
 char string_5_dig[6] = {};
 char* decimal_to_char(uint16_t value){
-	uint32_t divisor = 100000;
+	uint32_t divisor = 10000;
 	memset(string_5_dig, 0, 6);
 	string_5_dig[5] = '\0';
+	
 	for (uint8_t index = 0; index<5; index++){
-		string_5_dig[index] = (char)((value / divisor) % 10);
+		string_5_dig[index] = (char)(((value / divisor) % 10)+48);
+		
 		divisor /= 10;
+		
 	}
 	
 	// Trim Leading zeros
@@ -39,17 +42,22 @@ char* decimal_to_char(uint16_t value){
 	uint8_t first_dig_index = 0;
 	for (uint8_t index = 0; index<5; index++){
 		if (string_5_dig[index] != '0'){
+			
 			first_dig_index = index;
+			
 			break;
 		}
 	}
 	if (first_dig_index){
 		for (uint8_t index = 0; index<6; index++){
-			if ((index + first_dig_index) >=4){
+			if ((index + first_dig_index) >=5){
 				string_5_dig[index] = '\0';
+				
 				break;
 			} else{
-				string_5_dig[index] = string_5_dig[index + first_dig_index];		
+				
+				string_5_dig[index] = string_5_dig[index + first_dig_index];	
+					
 			}
 		
 		}
@@ -103,4 +111,10 @@ void transmit_string_with_val(char text[], char value[], uint8_t length){
 		 _delay_ms(5);
 		  
 	 }
+ }
+ 
+ 
+ void transmit_new_line(){
+	 usart_transmit('\n');
+	 usart_transmit('\r');
  }

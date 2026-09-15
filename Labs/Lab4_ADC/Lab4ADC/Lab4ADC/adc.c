@@ -19,14 +19,17 @@ uint16_t adc_read(uint8_t chan){
 	// Start conversion
 	ADCSRA |= (1<<ADSC);
 	// Wait
-	_delay_ms(500);
-	return (((uint16_t)ADCH << 8) | ADCL);
+	while((ADCSRA  & (1<<ADIF)));
+	uint8_t return_value_low = ADCL;
+	uint8_t return_value_high = ADCH;
+	uint16_t return_value = (((uint16_t)return_value_high << 8) | return_value_low);
+	return return_value;
 	
 }
 
 uint16_t adc_convert_mv(uint16_t adc_count){
 	uint32_t value = (uint32_t)adc_count;
-	value *= ((V_REF*1000) / (1023))/0.82;
+	value = (((uint32_t)value*V_REF*1000) / (1023));
 	return value;
 }
 

@@ -25,7 +25,8 @@ int main(void)
     {
 		_delay_ms(1);
 		volt_value = adc_convert_mv(adc_read(2));
-		transmit_string_with_val("Read voltage is ", decimal_to_char(12345), 16);
+		transmit_string_with_val("Read voltage is: ", decimal_to_char(volt_value), 17);
+		transmit_new_line();
 		// fix decimal to char
 		
     }
