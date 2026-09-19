@@ -24,42 +24,42 @@ void usart_init(uint16_t ubrr){
 	
 }
 
-char string_5_dig[6] = {};
+char string_10_dig[11] = {};
 char* decimal_to_char(uint16_t value){
-	uint32_t divisor = 10000;
-	// Clear string_5_dig
-	memset(string_5_dig, 0, 6);
-	string_5_dig[5] = '\0';
+	uint32_t divisor = 1000000000;
+	// Clear string_10_dig
+	memset(string_10_dig, 0, 11);
+	string_10_dig[10] = '\0';
 	// Convert digits to characters
-	for (uint8_t index = 0; index<5; index++){
-		string_5_dig[index] = (char)(((value / divisor) % 10)+48);
+	for (uint8_t index = 0; index<10; index++){
+		string_10_dig[index] = (char)(((value / divisor) % 10)+48);
 		divisor /= 10;
 	}
 	
 	// Trim Leading zeros
 	// Does not trim if there are no non-zero values
 	uint8_t first_dig_index = 0;
-	for (uint8_t index = 0; index<5; index++){
-		if (string_5_dig[index] != '0'){
+	for (uint8_t index = 0; index<10; index++){
+		if (string_10_dig[index] != '0'){
 			first_dig_index = index;
 			break;
 		}
 	}
 	// Rearrange to trim
 	if (first_dig_index){
-		for (uint8_t index = 0; index<6; index++){
-			if ((index + first_dig_index) >=5){
-				string_5_dig[index] = '\0';
+		for (uint8_t index = 0; index<11; index++){
+			if ((index + first_dig_index) >=10){
+				string_10_dig[index] = '\0';
 				
 				break;
 			} else{
-				string_5_dig[index] = string_5_dig[index + first_dig_index];	
+				string_10_dig[index] = string_10_dig[index + first_dig_index];	
 			}
 		
 		}
 	}
 	
-	return string_5_dig;
+	return string_10_dig;
 }
 	
  
@@ -109,8 +109,8 @@ void transmit_string_with_val(char text[], char value[], uint8_t length){
  }
  
  
- void transmit_excel_two_columns(uint16_t col_1[], uint16_t col_2[]){
-	for (uint8_t index = 0; index<40; index++){
+ void transmit_excel_two_columns(uint16_t col_1[], uint16_t col_2[], uint8_t samples){
+	for (uint8_t index = 0; index<samples; index++){
 		transmit_string(decimal_to_char(col_1[index]));
 		usart_transmit(','); usart_transmit(' '); usart_transmit(9);
 		transmit_string(decimal_to_char(col_2[index]));
