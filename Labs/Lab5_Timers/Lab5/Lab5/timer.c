@@ -10,10 +10,11 @@ ISR(TIMER0_OVF_vect){
 
 volatile uint8_t overflow_count = 0;
 ISR(TIMER0_COMPA_vect){
-	if (overflow_count = 10){
-	led_toggle();
-	overflow_count = 0;
+	if (overflow_count == 10){
+		led_toggle();
+		overflow_count = 0;
 	}
+	overflow_count++;
 }
 
 void timer0_init(){
