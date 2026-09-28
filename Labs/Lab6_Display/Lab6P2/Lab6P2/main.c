@@ -20,46 +20,45 @@ volatile uint8_t segment_0_to_9[10] = {0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D,
 void send_next_char(uint8_t value){
 	PORTC = 0;
 	value = segment_0_to_9[value];
-	for (uint8_t i = 7; i>=0; i--){
+	for (int8_t i = 7; i>=0; i--){
 		PORTC |= (((value & (1 << i)) >> i) << SH_DS);
+		PINC |= (1<<SH_CP);
 		PINC |= (1<<SH_CP);
 		PORTC = 0;
 	}
 	PINC |= (1<<SH_ST);
-	_delay_ms(1);
 	PINC |= (1<<SH_ST);
 }
 void set_seg(uint8_t value, uint8_t dig){
 	// Disable All digits
+	PORTD = 0xFF;
+	send_next_char(value);
+	PORTD &= ~(dig_pins[dig - 1]);	
+}
+void set_seg_all_digits(uint8_t value){
+	// Enable All Digits
 	PORTD = 0;
 	send_next_char(value);
-	PORTD |= dig_pins[dig - 1];	
 }
 int main(void)
 {
-	DDRD = 0b11110000;
-	DDRC = 0b0001110;
+	DDRD = 0xFE;
+	DDRC = 0xFF;
 	DDRB = 0xFF;
 	volatile uint8_t testing = 0;
 	volatile uint8_t button_down = 0;
-    /* Replace with your application code */
+	volatile uint8_t counter = 0;
     while (1) 
     {
 		
-		_delay_ms(100);
-		if (button_down && (PINB & (1<<PINB7))){
-			button_down = 0;
-		} else if (!button_down && !(PINB & (1 << PINB7))){
-			testing++;
-			button_down = 1;
+		set_seg_all_digits(counter);
+		_delay_ms(1000);
+		counter++;
+		if (counter > 9){
+			counter = 0;
 		}
-		if (button_down){
-			set_seg(0, 1);
-			PORTB |= (1<<PINB0);
-		} else{
-			set_seg(7, 1);
-			PORTB &= ~(1<<PINB0);
-		}
+		
+		
 		
     }
 }
