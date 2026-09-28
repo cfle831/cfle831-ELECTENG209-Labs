@@ -4,7 +4,9 @@
  * Created: 24/09/2026 10:41:16 am
  * Author : ferre
  */ 
-#define F_CPU 2000000
+#define F_CPU 2000000UL
+#define left_dig (1<<PINB1)
+#define right_dig (1<<PINB0)
 #include <util/delay.h>
 #include <avr/io.h>
 #include "UART.h"
@@ -24,12 +26,18 @@ void set_seg(uint8_t value){
 }
 
 void two_dig_update_display(uint8_t value){
-	set_seg((value / 10) % 10);
-	PORTB &= ~(1 << PINB0);
-	PORTB |= (1<<PINB1);
-	set_seg(value % 10);
-	PORTB |= (1 << PINB0);
-	PORTB &= ~(1<<PINB1);
+	PORTB &= ~(left_dig | right_dig);
+	if (disp_to_update == 1){
+		set_seg((value / 10) % 10);
+		PORTB |= (left_dig);
+		disp_to_update = 2;
+	}else{
+		set_seg(value % 10);
+		PORTB |= (right_dig);
+		disp_to_update = 1;
+	}
+	
+	
 }
 int main(void)
 {
@@ -40,7 +48,7 @@ int main(void)
 	DDRB &= ~(1 << PINB7);
 	DDRC = 0xFF;
 	PORTB |= (1<< PINB0);
-	volatile uint8_t counter = 0;
+	volatile uint8_t counter = 10;
 	volatile uint8_t delay_count = 0;
 	volatile uint8_t button_down = 0;
 	volatile uint8_t testing = 0;
@@ -57,12 +65,11 @@ int main(void)
 			testing++;
 			button_down = 1;
 		}
-
-		_delay_ms(100);
+		// 50 appears to be the smallest delay that allows correct display
+		_delay_ms(50);
 		delay_count++;
-		if (delay_count >= 10){
+		if (delay_count >= 20){
 			delay_count = 0;
-			//set_seg(counter);
 			counter++; 
 		}
 		

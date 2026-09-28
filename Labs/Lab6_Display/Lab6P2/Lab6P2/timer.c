@@ -4,10 +4,10 @@
 #include <avr/interrupt.h>
 #include <stdint.h>
 
-extern uint8_t update_flag;
+//extern uint8_t update_flag;
 volatile uint8_t cur_counting = 0;
 ISR(TIMER1_COMPA_vect){
-	update_flag = 1;
+	//update_flag = 1;
 }
 
 volatile uint16_t overflow_count = 0;
