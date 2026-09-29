@@ -40,6 +40,17 @@ void set_seg_all_digits(uint8_t value){
 	PORTD = 0;
 	send_next_char(value);
 }
+void display_number(uint16_t number){
+	set_seg((number/1000) % 10,1);
+	_delay_us(500);
+	set_seg((number/100) % 10,2);
+	_delay_us(500);
+	set_seg((number/10) % 10,3);
+	_delay_us(500);
+	set_seg(number % 10,4);
+	_delay_us(500);
+	
+}
 int main(void)
 {
 	DDRD = 0xFE;
@@ -47,14 +58,18 @@ int main(void)
 	DDRB = 0xFF;
 	volatile uint8_t testing = 0;
 	volatile uint8_t button_down = 0;
-	volatile uint8_t counter = 0;
+	volatile uint16_t counter = 9985;
+	volatile uint8_t delay_counter = 0;
     while (1) 
     {
-		
-		set_seg_all_digits(counter);
-		_delay_ms(1000);
-		counter++;
-		if (counter > 9){
+		if (delay_counter >= 50){
+			counter++;
+			delay_counter = 0;
+		}
+		display_number(counter); // Takes ~ 2ms per call
+		_delay_ms(8); // 10 - time per call ^
+		delay_counter++;
+		if (counter > 9999){
 			counter = 0;
 		}
 		
